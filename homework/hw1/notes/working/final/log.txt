@@ -1,0 +1,59 @@
+**Question:** What's the difference between `rmdir` and `rm -r`? Why did you need `rm -r` in step 7 and not `rmdir`?
+    Answer: rmdir is for removing empty directories, rm -r tells the computer to delete regardless of whats inside
+
+==Counting & Searching==
+wc: "12310 107558 607606"
+wc -l:"12310"
+wc -w:"107558"
+# of "Watson"s: 81
+# of "Holmes": 460
+more "Holmes"
+
+==Regex Challenges==
+1.  Every instance where a word begins with "Holmes" or "Watson."
+    in>$ grep -Eo "\<(Watson|Holmes)" holmes.txt
+    out>Holmes
+        Holmes
+        Holmes
+        Holmes
+        Holmes
+        Holmes
+        Holmes
+        Watson
+        Watson... etc.
+2.  All five-letter words in the file.
+    in>$ grep -Eo "\<([A-Z]|[a-z])([A-Z]|[a-z])([A-Z]|[a-z])([A-Z]|[a-z])([A-Z]|[a-z])\>" holmes.txt
+    [i know how ugly that is, but does it not work?]
+    out>shall
+        train
+        Yours
+        which
+        final
+        whole
+        would... etc.
+3.  All lines that end in a question mark (remember `?` is a special character in regex — you'll need to escape it with `\`).
+    in>$ grep -E "\?$" holmes.txt
+    out>to do their own secreting. Why should she hand it over to anyone else?
+        me. What was this nocturnal expedition, and why should I go armed?
+        “It’s all clear,” he whispered. “Have you the chisel and the bags?
+        mine. And yet, what could have happened? And why could he not write?...etc.
+4.  All instances of a letter repeated twice in a row (like "ee" in "sleep" or "ss" in "glass"), using a backreference.
+    in>$ grep -Eo "([a-z])\1" holmes.txt
+    out>ll
+        ee
+        ll
+        tt
+        ll
+        cc
+        tt
+        ll
+        ss
+        tt... etc
+5.  The total number of times "he" or "He" or "she" or "She" appears as its own word (not buried inside a longer word like "the" or "shelf")
+    in>$ grep -Ec "\<(he|He|she|She)\>" holmes.txt
+    out>1697
+
+==Reflection==
+the easiest part was probably the 'wc' questions at the start, they're super simple.
+the hardest was weirdly the five letter word search, I'm not sure why I cant think of the right angle to aproach from but you saw the janky way I ended up doing it.
+one linguistic question you could investigate using 'grep' and regex is "is there a pattern in the vowel order of sayings like 'tic tac toe' or 'ding dong'?
