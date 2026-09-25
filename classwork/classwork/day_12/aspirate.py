@@ -1,0 +1,12 @@
+word = input("Enter a word, any word: ")
+
+# Step 1: check if word starts with a voiceless stop
+starts_p = word[0] == "p"
+starts_t = word[0] == "t"
+starts_k = word[0] == "k"
+
+# Step 2: decide aspiration (simplified: only if it’s the first sound)
+aspirated = starts_p or starts_t or starts_k  ## one True is all you need for True
+
+print("Word:", word)
+print("Aspirated?", aspirated)
