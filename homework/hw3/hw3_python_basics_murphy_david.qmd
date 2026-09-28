@@ -1,0 +1,7 @@
+{python}
+
+books = 24
+war_years = 10
+journey_years = 10
+
+total_years_away = (war_years + journey_years)
