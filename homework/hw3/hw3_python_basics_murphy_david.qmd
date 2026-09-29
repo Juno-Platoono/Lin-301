@@ -1,7 +1,99 @@
 {python}
 
+### Numbers
+```{python}
 books = 24
 war_years = 10
 journey_years = 10
 
 total_years_away = (war_years + journey_years)
+
+books_per_week = (24//7)
+leftover_books = (24%7)
+
+type(books) #int
+type(books_per_week) #int
+type(total_years_away) #int, makes sense to me
+```
+
+### Strings
+```{python}
+hero = "Odysseus"
+epithet = "a complicated man"
+print(hero+" "+epithet)
+print(hero,epithet)
+
+#identical outputs
+
+homer_quote = "\"the man of twists and turns\""
+```
+
+### Booleans
+```{python}
+years_match = war_years == journey_years
+print(years_match)
+
+book_number = 3
+
+is_first_book = book_number == 1
+is_last_book = book_number == 24
+is_bookend = (is_last_book == True) or (is_first_book == True)
+
+print (book_number,is_bookend)
+```
+
+### Book Profile
+```{python}
+book_number = 7
+my_guess = "Penelope goes shopping"
+is_double_digit = (book_number >= 10)
+print(book_number, my_guess, is_double_digit)
+print(type(book_number),type(my_guess),type(is_double_digit))
+```
+
+### part 2
+```{python}
+with open("odyssey.txt", encoding="utf-8") as f:
+    text = f.read()
+```
+```{python}
+words = text.split()
+```
+
+### Lists
+```{python}
+print(len(words))
+words[0:20] #'The','Project','Gutenberg','eBook','of','The','Odyssey','This','eBook','is','for','the','use','of','anyone','anywhere','in','the','United','States'
+words[100:110]#1,','1999','[eBook','#1727]','Most','recently','updated:','December','2,','2023'
+words[240:260]#'I','published','in','1897.', 'I', 'could', 'not','give', 'the', 'whole', '“Odyssey”', 'in', 'that', 'book', 'without', 'making', 'it', 'unwieldy,', 'I', 'therefore'
+#Clearly a foreword from the author
+words[400:420]#'place', 'now', 'called', 'Trapani,', 'and', 'introduced', 'herself', 'into', 'her','work', 'under', 'the', 'name', 'of', 'Nausicaa.', 'The', 'main','arguments', 'on', 'which'
+words[910:930]#'they', 'perished,', 'fools,', 'who','devoured', 'the', 'oxen', 'of', 'Helios','Hyperion:', 'but', 'the','god', 'took', 'from', 'them', 'their','day', 'of', 'returning.'
+#Finally wow
+```
+
+### Sets
+```{python}
+unique_words = set(words)
+print(len(unique_words))
+ttr_odessy = len(unique_words)/len(words)
+print(ttr_odessy)
+#the odessy has a TTR of 0.11, much lower than the introductions we look at earlier. this is likely because basic repeated sentance structures and filler words pile up as a text continues. every 'The' 'and' or 'so' just lowers the ratio.
+```
+
+### Dictionaries
+```{python}
+text.count("Odysseus") #5? that seems really low
+position = text.find("Odysseus")
+text[position - 150: position + 150] #apears to be in the book proper
+text.count("Ulysses") #635, thats more than 5 :-)
+character_counts = {"Ulesses":text.count("Ulysses"),"Penelope":text.count("Penelope"),"Telemachus":text.count("Telemachus"),"Minerva":text.count("Minerva")}
+print(character_counts)
+print(character_counts["Ulesses"])
+character_counts["sea"] = text.find("sea")
+```
+
+
+The full text really shows why these tools for automation are so important. 
+I think that they would not seriously effect the ttr, though many words will be repeated in the licence, the wording of the licinse does not repeat in the main text and its small size makes any repetition of common words like "The" negligable. 
+of the three structures, I think that dictionaries felt the most natural to use. it didnt feel like i had to fight it to get information, and the information stored could be acessed in an intuitive way.
