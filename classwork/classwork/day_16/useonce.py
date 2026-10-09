@@ -1,7 +1,7 @@
 import urllib.request
 
-url = "https://www.gutenberg.org/files/141/141-0.txt"  # Mansfield Park
-filename = "../../../data/gutenberg/mansfield_park.txt"
+url = "https://www.gutenberg.org/cache/epub/1513/pg1513.txt"  # Mansfield Park
+filename = "../../../data/gutenberg/rnj.txt"
 
 try:
     urllib.request.urlretrieve(url, filename)

@@ -1,3 +1,5 @@
+import matplotlib
+
 word = input("Give me an English noun, in the singular: ")
 
 sibilants = ["s", "z", "ʃ", "ʒ", "tʃ", "dʒ"] 

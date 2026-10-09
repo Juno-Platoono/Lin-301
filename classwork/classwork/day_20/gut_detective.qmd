@@ -1,0 +1,125 @@
+```{python}
+from collections import Counter
+import matplotlib.pyplot as plt
+import re
+
+
+try:
+    with open("../../../data/gutenberg/moby.txt", "r", encoding="utf-8") as f:
+        moby_lines = f.readlines()
+except FileNotFoundError:
+    print("Couldn't find that file — check the filename and location.")
+
+while not moby_lines[0].startswith("*** START"):
+    moby_lines = moby_lines[1:]     # chop off the first line
+moby_lines = moby_lines[1:]         # chop off the *** START line itself
+
+while not moby_lines[-1].startswith("*** END"):
+    moby_lines = moby_lines[:-1]    # chop off the last line
+moby_lines = moby_lines[:-1]        # chop off the *** END line itself
+
+moby_text = "".join(moby_lines)
+
+
+
+try:
+    with open("../../../data/gutenberg/rnj.txt", "r", encoding="utf-8") as f:
+        rnj_lines = f.readlines()
+except FileNotFoundError:
+    print("Couldn't find that file — check the filename and location.")
+
+while not rnj_lines[0].startswith("*** START"):
+    rnj_lines = rnj_lines[1:]     # chop off the first line
+rnj_lines = rnj_lines[1:]         # chop off the *** START line itself
+
+while not rnj_lines[-1].startswith("*** END"):
+    rnj_lines = rnj_lines[:-1]    # chop off the last line
+rnj_lines = rnj_lines[:-1]        # chop off the *** END line itself
+
+rnj_text = "".join(rnj_lines)
+
+#cleaning
+import re
+
+moby_words = re.split(r"[\W]+", moby_text.lower())
+moby_words = [w for w in moby_words if w != ""]
+
+rnj_words = re.split(r"[\W]+", rnj_text.lower())
+rnj_words = [w for w in rnj_words if w != ""]
+
+
+
+moby_ttr = len(set(moby_words)) / len(moby_words)
+rnj_ttr = len(set(rnj_words)) / len(rnj_words)
+print("moby TTR:", moby_ttr)
+print("rnj Park TTR:", rnj_ttr)
+
+#other stuff
+
+moby_ttr_10000 = len(set(moby_words[:10000])) / len(moby_words[:10000])
+rnj_ttr_10000 = len(set(rnj_words[:10000])) / len(rnj_words[:10000])
+print("moby TTR (10,000 words):", moby_ttr_10000)
+print("rnj Park TTR (10,000 words):", rnj_ttr_10000)
+
+
+moby_wd_len_total = 0
+for w in moby_words:
+    moby_wd_len_total += len(w)
+moby_avg_word_len = moby_wd_len_total / len(moby_words)
+
+rnj_wd_len_total = 0
+for w in rnj_words:
+    rnj_wd_len_total += len(w)
+rnj_avg_word_len = rnj_wd_len_total / len(rnj_words)
+
+print("rnj Average Word Length:", rnj_avg_word_len)
+print("moby Average Word Length:", moby_avg_word_len)
+
+#ly rates 
+
+moby_ly =[w for w in moby_words if w .endswith("ly")]
+rnj_ly=[w for w in rnj_words if w .endswith("ly")]
+
+moby_ly_rate = len(moby_ly) / len(moby_words) * 1000
+rnj_ly_rate = len(rnj_ly) / len(rnj_words) * 1000
+
+print ("moby ly:",moby_ly_rate)
+print ("rnj ly:",rnj_ly_rate)
+
+#un rates
+moby_un =[w for w in moby_words if w .startswith("un")]
+rnj_un=[w for w in rnj_words if w .startswith("un")]
+
+moby_un_rate = len(moby_un) / len(moby_words) * 1000
+rnj_un_rate = len(rnj_un) / len(rnj_words) * 1000
+
+print ("moby un:",moby_un_rate)
+print ("rnj un:",rnj_un_rate)
+#ing rates
+moby_ing =[w for w in moby_words if w .endswith("ing")]
+rnj_ing=[w for w in rnj_words if w .endswith("ing")]
+
+moby_ing_rate = len(moby_ing) / len(moby_words) * 1000
+rnj_ing_rate = len(rnj_ing) / len(rnj_words) * 1000
+
+print ("moby ing:",moby_ing_rate)
+print ("rnj ing :",rnj_ing_rate)
+
+#ness rates
+moby_ness =[w for w in moby_words if w .endswith("ness")]
+rnj_ness=[w for w in rnj_words if w .endswith("ness")]
+
+moby_ness_rate = len(moby_ness) / len(moby_words) * 1000
+rnj_ness_rate = len(rnj_ness) / len(rnj_words) * 1000
+
+print ("moby ness:",moby_ness_rate)
+print ("rnj ness:",rnj_ness_rate)
+
+#explore 5
+moby_quote = [w for w in moby_words if w .startswith("\"")]
+rnj_quote =  [w for w in rnj_words if w .startswith("\"")]
+
+moby_quote_rate = len(moby_quote) / len(moby_words) * 1000
+rnj_quote_rate = len(rnj_quote) / len(rnj_words) * 1000
+print ("moby quote:",moby_quote_rate)
+```

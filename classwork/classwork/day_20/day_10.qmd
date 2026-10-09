@@ -1,0 +1,39 @@
+```{python}
+from collections import Counter
+import matplotlib.pyplot as plt
+import re
+
+
+try:
+    with open("../../../data/gutenberg/moby.txt", "r", encoding="utf-8") as f:
+        moby_lines = f.readlines()
+except FileNotFoundError:
+    print("Couldn't find that file — check the filename and location.")
+
+while not moby_lines[0].startswith("*** START"):
+    moby_lines = moby_lines[1:]     # chop off the first line
+moby_lines = moby_lines[1:]         # chop off the *** START line itself
+
+while not moby_lines[-1].startswith("*** END"):
+    moby_lines = moby_lines[:-1]    # chop off the last line
+moby_lines = moby_lines[:-1]        # chop off the *** END line itself
+
+moby_text = "".join(moby_lines)
+
+print(moby_lines[-5:])
+
+
+import re
+
+moby_list = re.split(r"[\W]+", moby_text.lower())
+moby_list = [w for w in moby_list if w != ""]
+
+moby_freqs = [pair[1] for pair in Counter(moby_list).most_common()]
+moby_ranks = range(1, len(moby_freqs) + 1)    # 1, 2, 3, ... up to the number of words
+
+plt.plot(moby_ranks, moby_freqs)
+plt.title("Rank vs. Frequency")
+plt.xlabel("Rank")
+plt.ylabel("Frequency")
+plt.show()
+```
