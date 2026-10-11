@@ -12,7 +12,7 @@
     • bonus: Can I find any patterns that determine when “d” is used compared to “dd” (/d/ vs /ð/)?
 5. A Look at the Data
     Paste a short excerpt of your raw data (5–10 lines) into a plain code block, exactly as it appears in the source, so I can see what you’ll be working with:
-```{python}
+```
 Y Gododdin
 
 I
