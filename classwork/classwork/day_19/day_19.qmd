@@ -1,1 +1,17 @@
 ```{python}
+
+rnj_counter = Counter(rnj_words)
+top10 = rnj_counter.most_common(10)
+
+stopwords = ["the", "to", "and", "of", "a", "her", "i", "in", "was", "it",
+             "she", "he", "be", "that", "you", "not", "had", "as", "his", "for",
+             "with", "is", "have", "but", "at", "so", "all", "my", "been", "him",
+             "on", "by", "could", "would", "very", "no", "what", "which", "they",
+             "were", "there", "me", "an", "must", "this", "said", "from", "or",
+             "will", "any", "much", "than", "such", "their", "them", "if", "do",
+             "did", "one", "when", "your", "more", "are", "we", "who", "up",
+             "out", "down", "into", "s", "t"]
+
+rnj_content_words = [w for w in rnj_words if w not in stopwords]
+
+rnj_top10 = Counter(rnj_content_words).most_common(10)
