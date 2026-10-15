@@ -1,0 +1,232 @@
+```{python}
+from collections import Counter
+import matplotlib.pyplot as plt
+import re
+
+
+#PART 1
+#IMPORTING
+try:
+    with open("../../../data/gutenberg/moby.txt", "r", encoding="utf-8") as f:
+        moby_lines = f.readlines()
+except FileNotFoundError:
+    print("Couldn't find that file — check the filename and location.")
+
+while not moby_lines[0].startswith("*** START"):
+    moby_lines = moby_lines[1:]     
+moby_lines = moby_lines[1:]        
+
+while not moby_lines[-1].startswith("*** END"):
+    moby_lines = moby_lines[:-1]    
+moby_lines = moby_lines[:-1]       
+
+moby_text = "".join(moby_lines)
+
+
+
+try:
+    with open("../../../data/gutenberg/rnj.txt", "r", encoding="utf-8") as f:
+        rnj_lines = f.readlines()
+except FileNotFoundError:
+    print("Couldn't find that file — check the filename and location.")
+
+while not rnj_lines[0].startswith("*** START"):
+    rnj_lines = rnj_lines[1:]   
+rnj_lines = rnj_lines[1:]         
+
+while not rnj_lines[-1].startswith("*** END"):
+    rnj_lines = rnj_lines[:-1]    
+rnj_lines = rnj_lines[:-1]       
+
+rnj_text = "".join(rnj_lines)
+
+#code grabs the text from each book and saves it as a list callead 'book'_lines
+#the lines are then cleaned up a bit by chopping off everything before the start of the actual text and the lines after the end of the text
+#the paired down lines are smooshed together into 'book'_text
+
+
+#CLEANING
+import re
+
+moby_words = re.split(r"[\W]+", moby_text.lower())
+moby_words = [w for w in moby_words if w != ""]
+
+rnj_words = re.split(r"[\W]+", rnj_text.lower())
+rnj_words = [w for w in rnj_words if w != ""]
+
+#the text is cleaned using the split function, breakng things up into individual words and making the whole thing lower case, skipping blanks
+#END PART 1  
+
+#PART 2
+#TTR
+moby_ttr = len(set(moby_words)) / len(moby_words)
+rnj_ttr = len(set(rnj_words)) / len(rnj_words)
+print("moby types:",len(set(moby_words)))
+print("moby tokens:",len(moby_words))
+print("rnj types:",len(set(rnj_words)))
+print("rnj tokens:",len(rnj_words))
+print("moby TTR:", moby_ttr)
+print("rnj Park TTR:", rnj_ttr)
+
+#find the type token ration by dividing the number of unique words by the number of total words in each text
+#print that along with the tokens and type counts
+
+moby_ttr_10000 = len(set(moby_words[:10000])) / len(moby_words[:10000])
+rnj_ttr_10000 = len(set(rnj_words[:10000])) / len(rnj_words[:10000])
+print("moby TTR (10,000 words):", moby_ttr_10000)
+print("rnj Park TTR (10,000 words):", rnj_ttr_10000)
+
+#finds a sample from just 10,000 words to account for different overall size of each text, which affects the ttr due to the build of of function words like "the"
+
+#WORD LENGTH
+moby_wd_len_total = 0
+for w in moby_words:
+    moby_wd_len_total += len(w)
+moby_avg_word_len = moby_wd_len_total / len(moby_words)
+
+rnj_wd_len_total = 0
+for w in rnj_words:
+    rnj_wd_len_total += len(w)
+rnj_avg_word_len = rnj_wd_len_total / len(rnj_words)
+
+print("rnj Average Word Length:", rnj_avg_word_len)
+print("moby Average Word Length:", moby_avg_word_len)
+
+#makes variable to store total wordlength and fills it up by going through the text and adding value for each words length
+#then divides that total length by the total number of words to get the average length of any word
+#END PART 2
+
+#PART 3
+#LY 
+moby_ly =[w for w in moby_words if w .endswith("ly")]
+rnj_ly=[w for w in rnj_words if w .endswith("ly")]
+
+moby_ly_rate = len(moby_ly) / len(moby_words) * 1000
+rnj_ly_rate = len(rnj_ly) / len(rnj_words) * 1000
+
+print ("moby ly:",moby_ly_rate)
+print ("rnj ly:",rnj_ly_rate)
+#looks for words within each text that end in 'ly' then creates a ratio per 1000 words to account for difference in overall length.
+#UN
+moby_un =[w for w in moby_words if w .startswith("un")]
+rnj_un=[w for w in rnj_words if w .startswith("un")]
+
+moby_un_rate = len(moby_un) / len(moby_words) * 1000
+rnj_un_rate = len(rnj_un) / len(rnj_words) * 1000
+
+print ("moby un:",moby_un_rate)
+print ("rnj un:",rnj_un_rate)
+#checks for words starting with "un" then does the same ratio
+#ING
+moby_ing =[w for w in moby_words if w .endswith("ing")]
+rnj_ing=[w for w in rnj_words if w .endswith("ing")]
+
+moby_ing_rate = len(moby_ing) / len(moby_words) * 1000
+rnj_ing_rate = len(rnj_ing) / len(rnj_words) * 1000
+
+print ("moby ing:",moby_ing_rate)
+print ("rnj ing :",rnj_ing_rate)
+#same but with 'ing'
+#NESS
+moby_ness =[w for w in moby_words if w .endswith("ness")]
+rnj_ness=[w for w in rnj_words if w .endswith("ness")]
+
+moby_ness_rate = len(moby_ness) / len(moby_words) * 1000
+rnj_ness_rate = len(rnj_ness) / len(rnj_words) * 1000
+
+print ("moby ness:",moby_ness_rate)
+print ("rnj ness:",rnj_ness_rate)
+#same but with 'ness'
+#DIALOGUE
+moby_quote = [w for w in moby_words if w .startswith("\"")]
+rnj_quote =  [w for w in rnj_words if w .startswith("\"")]
+
+moby_quote_rate = len(moby_quote) / len(moby_words) * 1000
+rnj_quote_rate = len(rnj_quote) / len(rnj_words) * 1000
+
+print ("moby quote:",moby_quote_rate)
+print("rnj quote:",rnj_quote_rate)
+#checks for lines staring with '"', using '\' to search properly
+#COMMON WORDS
+moby_counter = Counter(moby_words)
+top10 = moby_counter.most_common(10)
+
+stopwords = ["the", "to", "and", "of", "a", "her", "i", "in", "was", "it",
+             "she", "he", "be", "that", "you", "not", "had", "as", "his", "for",
+             "with", "is", "have", "but", "at", "so", "all", "my", "been", "him",
+             "on", "by", "could", "would", "very", "no", "what", "which", "they",
+             "were", "there", "me", "an", "must", "this", "said", "from", "or",
+             "will", "any", "much", "than", "such", "their", "them", "if", "do",
+             "did", "one", "when", "your", "more", "are", "we", "who", "up",
+             "out", "down", "into", "s", "t", "thee", "thy", "thou", "d", "ye", "now", "like", "then", "some", "upon", "shall", "_"]
+             #ADDED 'YE' 'THY' 'THEE' 'THOU' AND 'D' TO STOPWORDS TO ACCOUNT FOR SAILOR/SHAKSPEARIAN VOCAB
+
+moby_content_words = [w for w in moby_words if w not in stopwords]
+
+moby_top10 = Counter(moby_content_words).most_common(10)
+moby_labels = [pair[0] for pair in moby_top10]
+moby_freqs = [pair[1] for pair in moby_top10]
+
+rnj_counter = Counter(rnj_words)
+top10 = rnj_counter.most_common(10)
+
+stopwords = ["the", "to", "and", "of", "a", "her", "i", "in", "was", "it",
+             "she", "he", "be", "that", "you", "not", "had", "as", "his", "for",
+             "with", "is", "have", "but", "at", "so", "all", "my", "been", "him",
+             "on", "by", "could", "would", "very", "no", "what", "which", "they",
+             "were", "there", "me", "an", "must", "this", "said", "from", "or",
+             "will", "any", "much", "than", "such", "their", "them", "if", "do",
+             "did", "one", "when", "your", "more", "are", "we", "who", "up",
+             "out", "down", "into", "s", "t", "thee", "thy", "thou", "d", "ye", "now", "like", "then", "some", "upon", "shall", "_"]
+
+rnj_content_words = [w for w in rnj_words if w not in stopwords]
+
+
+rnj_top10 = Counter(rnj_content_words).most_common(10)
+rnj_labels = [pair[0] for pair in rnj_top10]
+rnj_freqs = [pair[1] for pair in rnj_top10]
+
+print("top ten words in Moby Dick:",moby_top10)
+print("top ten words in Romeo and Juliet:",rnj_top10)
+#sets up a counter with the text
+#finds the top 10 over-all most common words
+#counts all words that are NOT present in 'stopwords'
+#finds the most common content words
+#moby:whale, man, ship, ahab, sea, old, other, over, these, though
+#rnj:romeo, juliet,o, capulet, love, nurse, lady, friar, come, here
+# this absolutely makes sense given the topic of each text, all words seem very relevant.
+# END PART 3
+
+#PART 4
+plt.bar(["Mody Dick", "Romeo and Juliet"], [moby_ly_rate, rnj_ly_rate])
+plt.title("frequency of 'ly' in Moby Dick and Romeo and Juliet")
+plt.xlabel("source")
+plt.ylabel("Frequency per 1000 words")
+plt.xticks(rotation=45)
+plt.tight_layout()    # keeps the rotated labels from getting cut off
+plt.show()
+
+
+
+
+plt.plot(rnj_labels, rnj_freqs, label="Romeo and Juliet")
+plt.plot(moby_labels,moby_freqs, label="Moby Dick")
+plt.title("Most used content words")
+plt.xlabel("rank")
+plt.ylabel("frequency")
+#plt.xscale("log")
+#plt.yscale("log")
+plt.legend()
+
+#END PART 4
+
+#PART 5
+#each writer uses 
+#END PART 5
+
+#PART 6
+#The charts obviously gave me some grief but other than that any challanges i ran into were really fun to solve. 
+#doing things on my own time can be a good thing and a bad thing, i unfortunetly gave myself time to procrastinate
+#i used no AI, I find the 'negotiation' you need to do with LLMs for them to be useful to be beyond draining and lead to inconsistent results.
+#END PART 6
+```
