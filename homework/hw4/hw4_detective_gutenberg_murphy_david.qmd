@@ -231,4 +231,6 @@ plt.legend()
 #doing things on my own time can be a good thing and a bad thing, i unfortunetly gave myself time to procrastinate
 #i used no AI, I find the 'negotiation' you need to do with LLMs for them to be useful to be beyond draining and lead to inconsistent results.
 #END PART 6
+
+#PS I have been fighting this thing for too long, it compiles and thats enough for me at this point. I still cant get the graphs and quote count to work but I need to get this thing turned in. 
 ```
