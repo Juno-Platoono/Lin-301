@@ -1,0 +1,130 @@
+```{python}
+
+import pandas as pd
+
+forms     = ["aqua", "rosa", "amō", "canis", "magnus", "videō", "puella", "bonus", "dominus", "portō", "lupus", "longus"]
+glosses   = ["water", "rose", "I love", "dog", "big", "I see", "girl", "good", "lord", "I carry", "wolf", "long"]
+pos       = ["noun", "noun", "verb", "noun", "adj", "verb", "noun", "adj", "noun", "verb", "noun", "adj"]
+syllables = [2, 2, 2, 2, 2, 3, 3, 2, 3, 2, 2, 2]
+
+latin_rows = []
+
+for f, g, p, s in zip(forms, glosses, pos, syllables):
+    latin_rows.append({
+        "form": f,
+        "gloss": g,
+        "pos": p,
+        "syllables": s
+    })
+
+latin_df = pd.DataFrame(latin_rows)
+print(latin_df)
+
+latin_df.to_csv("latin_lexicon.csv", index=False, encoding="utf-8-sig")
+
+check = pd.read_csv("latin_lexicon.csv")
+print(check)
+```
+
+```{python}
+import pandas as pd
+
+root    = ["*bʰer-", "*ĝenh₁-", "*ped-", "*doh₃-"]
+meaning = ["to carry", "to beget", "foot", "to give"]
+latin   = ["ferō", "gignō", "pēs", "dō"]
+greek   = ["pʰérō", "gígnomai", "poús", "dídōmi"]
+english = ["bear", "kin", "foot", "donate"]
+
+pie_rows = []
+
+for r,m,l,g,e in zip(root,meaning, latin, greek, english):
+    pie_rows.append({
+        "root": r,
+        "meaning": m,
+        "latin": l,
+        "greek": g,
+        "english": e
+    })
+pie_df = pd.DataFrame(pie_rows)
+print(pie_df)
+```
+
+```{python}
+import re
+import matplotlib
+import pandas as pd
+
+
+with open("../../../data/gutenberg/alice.txt", "r", encoding="utf-8") as f:
+    alice_lines = f.readlines()
+
+while not alice_lines[0].startswith("*** START"):
+    alice_lines = alice_lines[1:]
+alice_lines = alice_lines[1:]
+
+while not alice_lines[-1].startswith("*** END"):
+    alice_lines = alice_lines[:-1]
+alice_lines = alice_lines[:-1]
+
+alice_text = "".join(alice_lines)
+### count chapters\/
+chapters = re.split(r"\nCHAPTER [IVXL]+", alice_text)
+chapters = chapters[1:]
+####
+rows = []
+chapter_num = 0
+
+for chapter in chapters:
+    chapter_num += 1
+    words = re.split(r"[\W]+", chapter.lower())
+    words = [w for w in words if w != ""]
+    for w in words:
+        rows.append({"word": w, "chapter": chapter_num})
+
+alice_df = pd.DataFrame(rows)
+print(alice_df)
+
+len(alice_df)
+#print(alice_df.head(30))
+words = alice_df["word"]
+len(words)
+
+alice_df[alice_df["word"] == "queen"]
+alice_df[alice_df["word"].str.endswith("ly")]
+alice_df[alice_df["word"].str.startswith("un")]
+
+print("alice",len(alice_df[alice_df["word"] == "alice"]))
+print(alice_df[alice_df["word"].str.endswith("ing")])
+un = alice_df[alice_df["word"].str.startswith("un")]
+print("un",len(un))
+un = un[un["word"] != "under"]  #get rid of under
+
+alice_df[(alice_df["word"] == "queen") & (alice_df["chapter"] == 8)] # & for and
+alice_df[(alice_df["word"] == "king") | (alice_df["word"] == "queen")]# | for or
+alice_df[((alice_df["word"] == "king") | (alice_df["word"] == "queen")) & (alice_df["chapter"] == 8)] #both but is messy
+
+alice_df[(alice_df["word"].isin(["king", "queen"])) & (alice_df["chapter"] == 8)] #use '.isin'
+
+stopwords = ["the", "to", "and", "of", "a", "her", "i", "in", "was", "it",
+             "she", "he", "be", "that", "you", "not", "had", "as", "his", "for",
+             "with", "is", "have", "but", "at", "so", "all", "my", "been", "him",
+             "on", "by", "could", "would", "very", "no", "what", "which", "they",
+             "were", "there", "me", "an", "must", "this", "said", "from", "or",
+             "will", "any", "much", "than", "such", "their", "them", "if", "do",
+             "did", "one", "when", "your", "more", "are", "we", "who", "up",
+             "out", "down", "into", "s", "t"]
+
+alice_df[alice_df["word"].isin(stopwords)]
+
+
+content = alice_df[~alice_df["word"].isin(stopwords)]#use ~ to say 'not'
+
+```
+
+```{python}
+
+print(alice_df[(alice_df["word"].str.startswith("un")) & (alice_df["chapter"] == 1)])
+print("kq12", len(alice_df[(alice_df["word"].isin(["king", "queen"])) & (alice_df["chapter"] == 12)]))
+print("content", content)
+
+```

@@ -1,6 +1,7 @@
 ```{python}
 from collections import Counter
 import matplotlib.pyplot as plt
+
 import re
 
 
@@ -66,7 +67,7 @@ print("moby tokens:",len(moby_words))
 print("rnj types:",len(set(rnj_words)))
 print("rnj tokens:",len(rnj_words))
 print("moby TTR:", moby_ttr)
-print("rnj Park TTR:", rnj_ttr)
+print("rnj TTR:", rnj_ttr)
 
 #find the type token ration by dividing the number of unique words by the number of total words in each text
 #print that along with the tokens and type counts
@@ -74,7 +75,7 @@ print("rnj Park TTR:", rnj_ttr)
 moby_ttr_10000 = len(set(moby_words[:10000])) / len(moby_words[:10000])
 rnj_ttr_10000 = len(set(rnj_words[:10000])) / len(rnj_words[:10000])
 print("moby TTR (10,000 words):", moby_ttr_10000)
-print("rnj Park TTR (10,000 words):", rnj_ttr_10000)
+print("rnj TTR (10,000 words):", rnj_ttr_10000)
 
 #finds a sample from just 10,000 words to account for different overall size of each text, which affects the ttr due to the build of of function words like "the"
 
@@ -221,7 +222,8 @@ plt.legend()
 #END PART 4
 
 #PART 5
-#each writer uses 
+#romeo and juliet has a higher ttr which was initially surprising to me because i assumed that the more poetic nature of shakspear would lead to more repitition, but looking at the ttr per 10k words it is clear that mody dick does actually have a higher ttr proportionally. 
+
 #END PART 5
 
 #PART 6
