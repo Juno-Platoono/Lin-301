@@ -1,0 +1,24 @@
+the text is episode 7 season one of game of thrones. "you win or you die". I got the transcript off fandom wiki and coppied it into the txt file
+
+```{python}
+try:
+    with open("hw5_raw.txt", "r", encoding="utf-8") as f:
+        agot_lines = f.readlines()
+except FileNotFoundError:
+    print("Couldn't find that file — check the filename and location.")
+
+import re
+
+agot_list = re.split(r"[\W]+", agot_text)
+agot_list = [w for w in agot_list if w != ""]
+print(agot_list[0]) 
+print(agot_lines[0])
+
+
+
+
+
+
+
+
+```
