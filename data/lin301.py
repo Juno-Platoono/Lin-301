@@ -37,16 +37,17 @@ def load_words(filename):
 #so now you would do alice_words = load_words("alice.txt")
 
 def report(title, words):
-    ttr = len(set(words)) / len(words)
-    ttr_10000 = len(set(words[:10000])) / len(words[:10000])
-
-    letters = 0
-    for w in words:
-        letters += len(w)
-
-    print(title, "TTR:", ttr)
-    print(title, "TTR (10,000 words):", ttr_10000)
-    print(title, "Average Word Length:", letters / len(words))
-    return ttr_10000
+    print(title, "TTR:", ttr(words))
+    print(title, "TTR (10,000 words):", ttr_first(words))
+    print(title, "Average Word Length:", avg_word_len(words))
+    return ttr_first(words)
 #eg ("alice in wonderland", alice_words) if alice_words is already def
 
+#example of importing below
+
+#import sys
+#sys.path.append("../../../data")   # look for files in data/, too
+#import lin301
+
+#alice_words = lin301.load_words("alice.txt")
+#lin301.ttr_first(alice_words)

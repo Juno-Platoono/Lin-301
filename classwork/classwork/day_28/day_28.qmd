@@ -1,0 +1,38 @@
+```{python}
+import sys
+sys.path.append("../../../data")
+from lin301 import *    # this allows you to call up all of the functions in the file, without using the lin301. initial part
+import re
+
+```
+
+```{python}
+oz_words = load_words("oz.txt")
+print('The TTR of "The Wonderful Wizard of Oz" for the first 1000 words is: ', ttr_first(oz_words))
+print('The average word length in "The Wonderful Wizard of Oz" is: ', avg_word_len(oz_words))
+```
+
+```{python}
+alice_words = load_words("alice.txt")
+print(lines) #pulls an errror but lines dont conflict
+```
+
+```{python}
+def ly_rate(words):
+    total = 0\
+    for w in words if w .endswith("ly"):
+        total += 1
+    return total / len(words) * 1000
+```
+
+```{python}
+ly_rate(["quickly","fox","only"])
+```
+
+```{python}
+
+```
+
+```{python}
+
+```
